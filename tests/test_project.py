@@ -12,14 +12,8 @@ class TestProject(BaseTestCase):
         api.commit()
         assert project.data['name'] == project_name
 
-        sign_in = SignInView(self.driver)
-        sign_in.ok_button.click()
-        sign_in.welcome_by_email_button.click()
-        sign_in.email_input.set_value('dhkhk@gmail.com')
-        sign_in.continue_with_email_button.click()
-        sign_in.login_password_button.set_value('12345678')
-        home_view = sign_in.login_button.click()
-        sign_in.ok_button.click()
+        sign_in_view = SignInView(self.driver)
+        home_view = sign_in_view.sign_in_with_email('dhkhk@gmail.com', '12345678')
         home_view.change_view_button.click()
         home_view.get_item_by_name('Projects').click()
         home_view.find_full_text(project_name)

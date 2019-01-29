@@ -20,7 +20,6 @@ class BaseView:
 
 
 class SignInView(BaseView):
-
     def __init__(self, driver):
         super(SignInView, self).__init__(driver)
         self.welcome_by_email_button = BaseButton(driver=driver, locator_by=MobileBy.ID,
@@ -34,6 +33,16 @@ class SignInView(BaseView):
         self.login_button = BaseButton(driver=driver, locator_by=MobileBy.ID, locator_value='com.todoist:id/btn_log_in',
                                        return_view=HomeView(self.driver))
 
+    def sign_in_with_email(self, email, password):
+        self.ok_button.click()
+        self.welcome_by_email_button.click()
+        self.email_input.set_value(email)
+        self.continue_with_email_button.click()
+        self.login_password_button.set_value(password)
+        home_view = self.login_button.click()
+        home_view.ok_button.click()
+        return home_view
+
 
 class HomeView(BaseView):
     def __init__(self, driver):
@@ -41,6 +50,14 @@ class HomeView(BaseView):
         self.driver = driver
         self.change_view_button = BaseButton(driver=driver, locator_by=MobileBy.ACCESSIBILITY_ID,
                                              locator_value='Change the current view')
+        self.plus_button = BaseButton(driver, MobileBy.ID, 'com.todoist:id/fab', CreateTaskView(self.driver))
 
     def get_item_by_name(self, item_name):
         return BaseButton(self.driver, MobileBy.XPATH, "//*[@text='%s']" % item_name)
+
+
+class CreateTaskView(BaseView):
+    def __init__(self, driver):
+        super(CreateTaskView, self).__init__(driver)
+        self.task_name_input = BaseEditBox(driver, MobileBy.ID, 'android:id/message')
+        self.submit_button = BaseButton(driver, MobileBy.ID, 'android:id/button1')
