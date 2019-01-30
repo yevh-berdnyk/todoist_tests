@@ -1,3 +1,6 @@
+from selenium.common.exceptions import NoSuchElementException
+
+
 class BaseElement:
 
     def __init__(self, driver, locator_by, locator_value):
@@ -7,6 +10,12 @@ class BaseElement:
 
     def find_element(self):
         return self.driver.find_element(self.locator_by, self.locator_value)
+
+    def is_visible(self):
+        try:
+            return self.find_element().is_displayed()
+        except NoSuchElementException:
+            return False
 
 
 class BaseButton(BaseElement):
