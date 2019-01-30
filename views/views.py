@@ -77,7 +77,8 @@ class ProjectNameInput(BaseEditBox):
         super(ProjectNameInput, self).__init__(driver, MobileBy.ID, 'com.todoist:id/name')
 
     def set_value(self, value):
-        time.sleep(3)
+        time.sleep(3)  # temporary solution for StaleObjectException which appears
+        # from time to time when setting value on the ProjectNameInput
         super(ProjectNameInput, self).set_value(value)
 
 
