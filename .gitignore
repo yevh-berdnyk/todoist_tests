@@ -1,0 +1,5 @@
+*.pyc
+.cache
+.pytest_cache
+.idea
+result.xml

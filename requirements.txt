@@ -1,0 +1,4 @@
+Appium-Python-Client==0.26
+pytest==3.2.1
+selenium==2.53.6
+todoist-python==7.0.19
